@@ -55,9 +55,9 @@ public class TestChangeDate {
         $(withText("У вас уже запланирована встреча на другую дату. Перепланировать?")).shouldBe(visible, Duration.ofSeconds(5));
         $$("button").find(exactText("Перепланировать")).click();
         $(withText("Успешно")).shouldBe(visible, Duration.ofSeconds(15));
-        Thread.sleep(5000);
+
         $(withText("Встреча успешно запланирована на" /*+ registrationInfo.getDate()*/)).shouldBe(visible, Duration.ofSeconds(5));
-        Thread.sleep(5000);
+
     }
 
 
