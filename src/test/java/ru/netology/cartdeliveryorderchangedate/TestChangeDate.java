@@ -27,36 +27,37 @@ public class TestChangeDate {
 
     @Test
     public void shouldSendForm() throws InterruptedException {
-        DataGenerator.RegistrationInfo registrationInfo = DataGenerator.generateInfo("ru", 3);
+        DataGenerator.RegistrationInfo registrationInfo = DataGenerator.generateInfo("ru");
         $("[placeholder='Город']").setValue(registrationInfo.getCity());
         $("[name='name']").setValue(registrationInfo.getName());
         $("[name='phone']").setValue(registrationInfo.getPhoneNumber());
-        $("[data-test-id=date] input").setValue(registrationInfo.getDate());
+        $("[data-test-id=date] input").setValue(DataGenerator.generateDate(3));
         $((".checkbox__text")).click();
         $$("button").find(exactText("Запланировать")).click();
         $(withText("Успешно")).shouldBe(visible, Duration.ofSeconds(15));
         $(byXpath("//div[@class='notification__content']")).shouldBe(visible)
-                .shouldHave(exactText("Встреча успешно запланирована на " + registrationInfo.getDate()));
+                .shouldHave(exactText("Встреча успешно запланирована на " + DataGenerator.generateDate(3)));
     }
     @Test
     public void shouldSendFormWithOfferAnotherDate() throws InterruptedException {
-        DataGenerator.RegistrationInfo registrationInfo = DataGenerator.generateInfo("ru", 3);
+        DataGenerator.RegistrationInfo registrationInfo = DataGenerator.generateInfo("ru");
         $("[placeholder='Город']").setValue(registrationInfo.getCity());
         $("[name='name']").setValue(registrationInfo.getName());
         $("[name='phone']").setValue(registrationInfo.getPhoneNumber());
-        $("[data-test-id=date] input").setValue(registrationInfo.getDate());
+        $("[data-test-id=date] input").setValue(DataGenerator.generateDate(3));
         $((".checkbox__text")).click();
         $$("button").find(exactText("Запланировать")).click();
         $(withText("Успешно")).shouldBe(visible, Duration.ofSeconds(15));
         $(byXpath("//div[@class='notification__content']")).shouldBe(visible)
-                .shouldHave(exactText("Встреча успешно запланирована на " + registrationInfo.getDate()));
+                .shouldHave(exactText("Встреча успешно запланирована на " + DataGenerator.generateDate(3)));
         $$("button").find(exactText("Запланировать")).click();
         $(withText("Необходимо подтверждение")).shouldBe(visible, Duration.ofSeconds(15));
+        $("[data-test-id=date] input").setValue(DataGenerator.generateDate(3));
         $(withText("У вас уже запланирована встреча на другую дату. Перепланировать?")).shouldBe(visible, Duration.ofSeconds(5));
         $$("button").find(exactText("Перепланировать")).click();
         $(withText("Успешно")).shouldBe(visible, Duration.ofSeconds(15));
 
-        $(withText("Встреча успешно запланирована на" /*+ registrationInfo.getDate()*/)).shouldBe(visible, Duration.ofSeconds(5));
+        $(withText("Встреча успешно запланирована на" /*+ DataGenerator.generateDate(3*/)).shouldBe(visible, Duration.ofSeconds(5));
 
     }
 
