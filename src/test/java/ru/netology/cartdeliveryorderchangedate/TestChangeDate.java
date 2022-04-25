@@ -53,10 +53,8 @@ public class TestChangeDate {
         $(withText("У вас уже запланирована встреча на другую дату. Перепланировать?")).shouldBe(visible, Duration.ofSeconds(5));
         $$("button").find(exactText("Перепланировать")).click();
         $(withText("Успешно")).shouldBe(visible, Duration.ofSeconds(15));
-
-        $(withText("Встреча успешно запланирована на " + DataGenerator.generateDate(5))).shouldBe(visible, Duration.ofSeconds(5));
-
+        $(byXpath("//div[@class='notification__content']")).shouldBe(visible)
+                .shouldHave(exactText("Встреча успешно запланирована на " + DataGenerator.generateDate(5)))
+                .shouldBe(visible);
     }
-
-
 }
